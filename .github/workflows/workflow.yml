@@ -35,4 +35,4 @@ jobs:
 
     - name: Lint with Flake8
       run: |
-        flake8 . --show-sources --statistics
+        flake8 . --show-source --statistics
