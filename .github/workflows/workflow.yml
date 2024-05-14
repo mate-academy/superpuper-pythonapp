@@ -12,6 +12,7 @@ env:
 
 jobs:
   python-ci:
+    name: Python CI
     runs-on: ubuntu-latest
 
     defaults:
@@ -54,8 +55,9 @@ jobs:
         path: .
 
   build-image:
+    name: Build and Push Image
     runs-on: ubuntu-latest
-
+    needs: python-ci
     steps:
     - uses: actions/download-artifact@v4
       with:
