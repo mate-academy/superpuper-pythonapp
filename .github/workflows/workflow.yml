@@ -56,7 +56,6 @@ jobs:
         path: .
 
 
-
   build-image:
     name: Build and Push Image
     runs-on: ubuntu-latest
