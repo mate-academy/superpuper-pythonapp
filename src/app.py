@@ -17,10 +17,12 @@ connectionString = os.environ.get("DB_CONNECTION", "")
 app.config['SQLALCHEMY_DATABASE_URI'] = connectionString
 db = SQLAlchemy(app)
 
+
 # Define a Counter model
 class Counter(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     value = db.Column(db.Integer)
+
 
 # Initialize the databased
 with app.app_context():
@@ -30,6 +32,7 @@ with app.app_context():
         counter = Counter(value=0)
         db.session.add(counter)
         db.session.commit()
+
 
 @app.route('/')
 def hello():
@@ -49,13 +52,16 @@ def hello():
 <pre>         \\____\\______/</pre>
     '''
 
+
 @app.route('/logo')
 def docker_logo():
     return send_file('docker-logo.png', mimetype='image/png')
 
+
 @app.route('/health')
 def health_check():
     return Response("Healthy", status=200)
+
 
 @app.route('/ready')
 def readiness_check():
@@ -64,6 +70,7 @@ def readiness_check():
     else:
         return Response("Ready", status=200)
 
+
 @app.route('/external-call')
 def external_call():
     external_url = os.getenv('EXTERNAL_ENDPOINT')
@@ -71,9 +78,10 @@ def external_call():
         Response("EXTERNAL_ENDPOINT not defined", status=500)
     try:
         response = requests.get(external_url)
-        return Response(f"Extarnal call response: {response.text}", status = response.status_code)
+        return Response(f"Extarnal call response: {response.text}", status=response.status_code)
     except Exception as e:
         return Response(f"Error calling external endpoint: {str(e)}", status=500)
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)
